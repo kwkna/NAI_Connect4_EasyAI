@@ -1,6 +1,5 @@
 from easyAI import TwoPlayersGame, Human_Player, AI_Player, Negamax, SSS
 
-
 # Authors: Jakub Wirkus, Maciej Sochalski
 # Game: Connect 4
 
@@ -25,7 +24,7 @@ class Connect4(TwoPlayersGame):
             if self.board[row][int(column)] == 0:
                 self.board[row][int(column)] = self.nplayer
                 break
-            row = row - 1
+            row -= 1
 
     def win(self):
         return self.find_4(self.nplayer)
@@ -46,7 +45,7 @@ class Connect4(TwoPlayersGame):
         return False
 
     def find_4_horizontally(self, player):
-        for row in range(0, 6, 1):
+        for row in range(self.rows):
             count = 0
             for column in range(self.columns):
                 if self.board[row][column] == player:
@@ -113,14 +112,15 @@ class Connect4(TwoPlayersGame):
         return 100 if self.win() else 0  # For the AI
 
 
-# Start a match (and store the history of moves when it ends)
-ai = Negamax(5)
-ai_algo_sss = SSS(5)
-# game = Connect4([Human_Player(), AI_Player(ai)])
-game = Connect4([AI_Player(ai_algo_sss), AI_Player(ai)])
-history = game.play()
+if __name__ == '__main__':
+    # Start a match (and store the history of moves when it ends)
+    ai = Negamax(5)
+    ai_algo_sss = SSS(5)
+    # game = Connect4([Human_Player(), AI_Player(ai)])
+    game = Connect4([AI_Player(ai_algo_sss), AI_Player(ai)])
+    history = game.play()
 
-if game.win():
-    print('Player ', game.nplayer, ' wins')
-else:
-    print("Draw")
+    if game.win():
+        print('Player ', game.nplayer, ' wins')
+    else:
+        print("Draw")
